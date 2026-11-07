@@ -32,10 +32,12 @@ security:
                 token_handler: App\Security\AccessTokenHandler
                 failure_handler: App\Security\AuthenticationFailureHandler
 
-    # Pozostałe operacje modyfikujące są chronione atrybutem #[IsGranted('ROLE_ADMIN')]
-    # w kontrolerach. Odczyt serii i wyników jest publiczny, a POST /api/measurements
-    # uwierzytelnia czujnik kluczem X-API-Key (SensorValueResolver).
+    # access_control działa przed walidacją treści (bez tokenu zawsze 401);
+    # kontrolery mają dodatkowo #[IsGranted('ROLE_ADMIN')]. Odczyt serii i wyników
+    # jest publiczny, a POST /api/measurements uwierzytelnia czujnik kluczem
+    # X-API-Key (SensorApiKeyValueResolver).
     access_control:
+        - { path: ^/api/series, methods: [POST, PUT, PATCH, DELETE], roles: ROLE_ADMIN }
         - { path: ^/api/sensors, roles: ROLE_ADMIN }
         - { path: ^/api/auth/(logout|password)$, roles: ROLE_ADMIN }
 

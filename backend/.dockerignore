@@ -1,0 +1,8 @@
+/vendor/
+/var/
+/.env.local
+/.env.local.php
+/.env.*.local
+/tests/
+/phpunit.xml*
+/.phpunit.cache/

@@ -1,0 +1,38 @@
+# Środowisko lokalne: aplikacja (FrankenPHP, obraz produkcyjny) + PostgreSQL 16.
+# Porty na hoście można zmienić w pliku .env (APP_PORT, DB_PORT).
+services:
+  php:
+    build:
+      context: ./backend
+      target: prod
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    environment:
+      DATABASE_URL: "postgresql://app:${POSTGRES_PASSWORD:-app}@database:5432/app?serverVersion=16&charset=utf8"
+      APP_SECRET: "${APP_SECRET:-zmien-mnie-lokalny-sekret}"
+      ADMIN_USERNAME: "${ADMIN_USERNAME:-admin}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD:-}"
+      TRUSTED_PROXIES: "${TRUSTED_PROXIES:-127.0.0.1}"
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-app}"
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "app", "-U", "app"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

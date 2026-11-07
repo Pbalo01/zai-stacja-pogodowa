@@ -1,0 +1,13 @@
+# TLS terminuje platforma hostingowa (Render), więc serwer nasłuchuje zwykłym HTTP
+# na porcie z zmiennej środowiskowej PORT.
+{
+	auto_https off
+	admin off
+	frankenphp
+}
+
+:{$PORT:8080} {
+	root * /app/public
+	encode zstd br gzip
+	php_server
+}

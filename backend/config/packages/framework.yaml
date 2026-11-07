@@ -2,8 +2,19 @@
 framework:
     secret: '%env(APP_SECRET)%'
 
-    # Note that the session will be started ONLY if you read or write from it.
-    session: true
+    # Render terminuje TLS na swoim proxy – ufamy nagłówkom X-Forwarded-*,
+    # dzięki czemu Symfony widzi oryginalny schemat https.
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+
+    # JSON bez escapowania polskich znaków i ukośników:
+    # 1344 = JSON_UNESCAPED_SLASHES (64) | JSON_UNESCAPED_UNICODE (256) | JSON_PRESERVE_ZERO_FRACTION (1024)
+    serializer:
+        default_context:
+            json_encode_options: 1344
+
+    # API jest bezstanowe (tokeny Bearer) – sesje nie są potrzebne
+    session: false
 
     #esi: true
     #fragments: true
@@ -11,5 +22,3 @@ framework:
 when@test:
     framework:
         test: true
-        session:
-            storage_factory_id: session.storage.factory.mock_file

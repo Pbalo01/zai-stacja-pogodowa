@@ -18,7 +18,7 @@ class MeasurementRepository extends ServiceEntityRepository
     }
 
     /**
-     * Wyniki wybranych serii w domkniętym przedziale [from, to].
+     * Przedział [from, to] jest domknięty.
      *
      * @param int[] $seriesIds pusta tablica = wszystkie serie
      *
@@ -45,7 +45,6 @@ class MeasurementRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /** Czy seria ma wyniki spoza przedziału [min, max]? (PUT serii → 409) */
     public function existsOutsideRange(Series $series, float $min, float $max): bool
     {
         $count = $this->createQueryBuilder('m')

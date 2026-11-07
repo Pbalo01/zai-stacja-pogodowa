@@ -5,10 +5,7 @@ namespace App\Http;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Odpowiedź błędu w formacie Problem Details (RFC 9457):
- * {type, title, status, detail[, errors]} z typem application/problem+json.
- */
+// Problem Details (RFC 9457)
 class ProblemResponse extends JsonResponse
 {
     /**

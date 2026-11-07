@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/** Rejestracja i wyrejestrowanie czujników – tylko administrator. */
 #[Route('/api/sensors')]
 #[IsGranted('ROLE_ADMIN')]
 final class SensorController extends AbstractController
@@ -59,7 +58,7 @@ final class SensorController extends AbstractController
         return $this->json($sensor->toArray());
     }
 
-    /** Wyniki zebrane przez czujnik zostają (sensor_id → NULL w bazie). */
+    // Wyniki zebrane przez czujnik zostają (sensor_id → NULL w bazie).
     #[Route('/{id}', name: 'api_sensors_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function delete(#[MapEntity(message: 'Czujnik nie istnieje.')] Sensor $sensor): Response
     {

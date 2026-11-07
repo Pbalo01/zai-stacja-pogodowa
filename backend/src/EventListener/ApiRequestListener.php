@@ -9,12 +9,7 @@ use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * Negocjacja formatu dla /api: API mówi wyłącznie w JSON.
- * Priorytet wyższy niż router (32), żeby 406/415 miały pierwszeństwo przed 404/405.
- *  - Accept bez JSON (np. tylko application/xml) → 406,
- *  - treść żądania w formacie innym niż JSON → 415.
- */
+// Priorytet wyższy niż router (32), żeby 406/415 miały pierwszeństwo przed 404/405.
 #[AsEventListener(event: KernelEvents::REQUEST, priority: 64)]
 final class ApiRequestListener
 {

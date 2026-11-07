@@ -4,7 +4,6 @@ namespace App\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-/** Treść POST /api/sensors. */
 final class SensorInput
 {
     public function __construct(

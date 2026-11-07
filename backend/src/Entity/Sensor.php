@@ -5,10 +5,6 @@ namespace App\Entity;
 use App\Repository\SensorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Czujnik przypisany do jednej serii. Uwierzytelnia się kluczem API,
- * z którego w bazie zapisujemy tylko skrót SHA-256.
- */
 #[ORM\Entity(repositoryClass: SensorRepository::class)]
 class Sensor
 {
@@ -73,7 +69,7 @@ class Sensor
         return $this;
     }
 
-    /** Jawna lista pól – bez skrótu klucza API. */
+    // Jawna lista pól, żeby skrót klucza API nigdy nie trafił do odpowiedzi.
     public function toArray(): array
     {
         return [

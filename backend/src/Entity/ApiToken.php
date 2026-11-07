@@ -5,10 +5,7 @@ namespace App\Entity;
 use App\Repository\ApiTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Token dostępowy administratora (Bearer). W bazie przechowujemy wyłącznie
- * skrót SHA-256 tokenu – wyciek bazy nie pozwala się zalogować.
- */
+// W bazie tylko skrót SHA-256 tokenu – wyciek bazy nie pozwala się zalogować.
 #[ORM\Entity(repositoryClass: ApiTokenRepository::class)]
 class ApiToken
 {

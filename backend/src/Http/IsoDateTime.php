@@ -2,11 +2,8 @@
 
 namespace App\Http;
 
-/**
- * Ścisłe parsowanie znaczników czasu ISO 8601 ze strefą czasową,
- * np. 2026-10-15T08:30:00Z lub 2026-10-15T10:30:00.123+02:00.
- * Konstruktor DateTimeImmutable przyjąłby też „yesterday” czy „now” – tu nie.
- */
+// Sam konstruktor DateTimeImmutable przyjąłby też „yesterday” czy „now”,
+// dlatego najpierw wymagamy formatu ISO 8601 ze strefą czasową.
 final class IsoDateTime
 {
     private const PATTERN = '/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,6})?)?(Z|[+-]\d{2}:?\d{2})$/i';

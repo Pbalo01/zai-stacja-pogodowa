@@ -6,13 +6,10 @@ use App\Http\IsoDateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-/**
- * Treść POST /api/measurements. Seria nie jest podawana – wynika z klucza czujnika,
- * dlatego sprawdzenie przedziału min/max odbywa się w kontrolerze.
- */
+// Seria wynika z klucza czujnika, dlatego przedział min/max sprawdza kontroler.
 final class MeasurementInput
 {
-    /** Dopuszczalne „wyprzedzenie” zegara czujnika względem serwera. */
+    // Dopuszczalne „wyprzedzenie” zegara czujnika względem serwera.
     public const MAX_CLOCK_SKEW = '+5 minutes';
 
     public function __construct(
@@ -23,7 +20,7 @@ final class MeasurementInput
     ) {
     }
 
-    /** Znacznik czasu z treści albo bieżący czas serwera, gdy go pominięto. */
+    // Brak timestamp w treści = bieżący czas serwera.
     public function getTimestamp(): \DateTimeImmutable
     {
         return null === $this->timestamp ? new \DateTimeImmutable() : IsoDateTime::parse($this->timestamp);

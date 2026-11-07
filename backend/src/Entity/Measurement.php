@@ -5,10 +5,6 @@ namespace App\Entity;
 use App\Repository\MeasurementRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Pojedynczy wynik pomiaru. Indeks (series_id, timestamp) obsługuje
- * typowe zapytanie „wyniki serii w przedziale czasu”.
- */
 #[ORM\Entity(repositoryClass: MeasurementRepository::class)]
 #[ORM\Index(name: 'idx_measurement_series_timestamp', columns: ['series_id', 'timestamp'])]
 class Measurement
@@ -22,7 +18,7 @@ class Measurement
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private Series $series;
 
-    /** Wynik zostaje po wyrejestrowaniu czujnika (ON DELETE SET NULL). */
+    // Wynik zostaje po wyrejestrowaniu czujnika (ON DELETE SET NULL).
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Sensor $sensor;

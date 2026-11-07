@@ -44,9 +44,6 @@ Przykłady:
 const AIR_QUALITY_PARAMS = new Set(['pm2_5', 'pm10']);
 const WEATHER_PARAMS = new Set(['temperature_2m', 'relative_humidity_2m']);
 
-// ---------------------------------------------------------------------------
-// Parametry
-// ---------------------------------------------------------------------------
 function fail(message) {
   console.error(`Błąd: ${message}\nUżyj --help, aby zobaczyć dostępne opcje.`);
   process.exit(2);
@@ -125,9 +122,6 @@ function readOptions() {
   return o;
 }
 
-// ---------------------------------------------------------------------------
-// Generowanie wartości
-// ---------------------------------------------------------------------------
 const round = (v) => Math.round(v * 100) / 100;
 
 function makeGenerator({ shape, min, max, period }) {
@@ -150,9 +144,6 @@ function makeGenerator({ shape, min, max, period }) {
   };
 }
 
-// ---------------------------------------------------------------------------
-// Open-Meteo (dane rzeczywiste)
-// ---------------------------------------------------------------------------
 function openMeteoUrl({ param, lat, lon }, query) {
   const base = AIR_QUALITY_PARAMS.has(param)
     ? 'https://air-quality-api.open-meteo.com/v1/air-quality'
@@ -167,7 +158,7 @@ async function fetchJson(url) {
   return res.json();
 }
 
-/** Ostatnie `count` pomiarów godzinowych (bez prognozy na przyszłość). */
+// forecast_days=1 dokłada prognozę – odcinamy godziny z przyszłości.
 async function openMeteoHistory(o) {
   const pastDays = Math.min(92, Math.ceil(o.count / 24) + 1);
   const data = await fetchJson(openMeteoUrl(o, { hourly: o.param, past_days: String(pastDays), forecast_days: '1' }));
@@ -185,9 +176,6 @@ async function openMeteoCurrent(o) {
   return value;
 }
 
-// ---------------------------------------------------------------------------
-// Wysyłanie do API
-// ---------------------------------------------------------------------------
 async function send(o, body) {
   if (o.dryRun) {
     console.log(`  (próba) ${JSON.stringify(body)}`);
@@ -215,7 +203,6 @@ async function send(o, body) {
     return { ok: true };
   }
 
-  // Czytelny komunikat z Problem Details (RFC 9457)
   const title = json?.title ?? res.statusText;
   const detail = json?.detail ? ` – ${json.detail}` : '';
   const fields = (json?.errors ?? []).map((e) => `\n    • ${e.field}: ${e.message}`).join('');
@@ -225,9 +212,6 @@ async function send(o, body) {
 
 const isFatal = (r) => r.status === 401 || r.status === 403 || r.status === 404 || r.status === 415;
 
-// ---------------------------------------------------------------------------
-// Tryby pracy
-// ---------------------------------------------------------------------------
 async function runHistory(o) {
   let points;
   if (o.source) {

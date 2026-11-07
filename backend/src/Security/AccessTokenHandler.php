@@ -7,10 +7,6 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
-/**
- * Sprawdza token z nagłówka Authorization: Bearer – szuka jego skrótu
- * w bazie i odrzuca tokeny wygasłe lub unieważnione (wylogowanie).
- */
 final class AccessTokenHandler implements AccessTokenHandlerInterface
 {
     public function __construct(private readonly ApiTokenRepository $tokens)

@@ -4,10 +4,7 @@ namespace App\Exception;
 
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-/**
- * Błąd reguły semantycznej sprawdzanej w kontrolerze (np. wartość spoza
- * przedziału serii) – kończy się kodem 422 z listą errors[{field, message}].
- */
+// Reguła sprawdzana w kontrolerze (np. wartość spoza przedziału serii) → 422 z errors.
 class ValidationProblemException extends UnprocessableEntityHttpException
 {
     public function __construct(private readonly string $field, string $message)

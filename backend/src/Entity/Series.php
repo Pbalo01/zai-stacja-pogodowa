@@ -5,10 +5,7 @@ namespace App\Entity;
 use App\Repository\SeriesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Seria pomiarowa, np. „Temperatura – salon”. Warunek min_value < max_value
- * pilnuje dodatkowo ograniczenie CHECK w bazie (patrz migracja).
- */
+// Warunek min_value < max_value pilnuje dodatkowo CHECK w bazie (migracja).
 #[ORM\Entity(repositoryClass: SeriesRepository::class)]
 class Series
 {
@@ -111,7 +108,6 @@ class Series
         return $this;
     }
 
-    /** Jawna lista pól zwracanych przez API. */
     public function toArray(): array
     {
         return [

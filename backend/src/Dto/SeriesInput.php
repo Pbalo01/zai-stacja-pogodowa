@@ -4,7 +4,6 @@ namespace App\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-/** Treść POST/PUT /api/series. */
 final class SeriesInput
 {
     public function __construct(

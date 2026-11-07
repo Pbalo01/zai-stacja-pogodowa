@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
-/** Po poprawnym logowaniu (json_login) wydaje token Bearer. */
 final class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
     public function __construct(private readonly ApiTokenManager $tokens)

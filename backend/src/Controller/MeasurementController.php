@@ -21,10 +21,7 @@ use Symfony\Component\HttpKernel\Attribute\ValueResolver;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * Wyniki pomiarów: odczyt publiczny, zapis wyłącznie kluczem czujnika.
- * Celowo brak tras PUT/PATCH/DELETE – router odpowiada wtedy 405.
- */
+// Celowo brak tras PUT/PATCH/DELETE – router odpowiada wtedy 405.
 #[Route('/api/measurements')]
 final class MeasurementController extends AbstractController
 {

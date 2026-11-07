@@ -13,11 +13,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-/**
- * Tworzy konto administratora. Dane z argumentów, a gdy ich brak –
- * ze zmiennych środowiskowych ADMIN_USERNAME i ADMIN_PASSWORD.
- * Istniejącego konta nie zmienia, chyba że podano --update-password.
- */
+// Bez argumentów dane biorą się z ADMIN_USERNAME / ADMIN_PASSWORD (start kontenera).
+// Istniejącego konta nie zmienia, chyba że podano --update-password.
 #[AsCommand(name: 'app:create-admin', description: 'Tworzy konto administratora')]
 final class CreateAdminCommand
 {

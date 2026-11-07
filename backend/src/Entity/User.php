@@ -7,10 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * Konto administratora. W aplikacji istnieją tylko administratorzy,
- * czytelnicy nie mają kont (odczyt danych jest publiczny).
- */
+// Konta mają tylko administratorzy – odczyt danych jest publiczny.
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'app_user')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -23,7 +20,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private string $username;
 
-    /** Skrót hasła (argon2id) – nigdy nie trafia do odpowiedzi API. */
     #[ORM\Column]
     private string $password;
 
@@ -52,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return ['ROLE_ADMIN'];
     }
 
-    /** Nie przechowujemy jawnego hasła w obiekcie – nie ma czego czyścić. */
+    // Jawne hasło nie jest przechowywane w obiekcie – nie ma czego czyścić.
     #[\Deprecated]
     public function eraseCredentials(): void
     {

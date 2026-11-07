@@ -57,7 +57,6 @@ final class SeriesController extends AbstractController
         #[MapRequestPayload] SeriesInput $input,
         MeasurementRepository $measurements,
     ): JsonResponse {
-        // Nowy przedział nie może „wyrzucić” poza siebie zapisanych już wyników
         if ($measurements->existsOutsideRange($series, $input->minValue, $input->maxValue)) {
             throw new ConflictHttpException('Nowy przedział [minValue, maxValue] wyklucza wyniki zapisane już w serii.');
         }
@@ -68,7 +67,7 @@ final class SeriesController extends AbstractController
         return $this->json($series->toArray());
     }
 
-    /** Wyniki i czujniki serii usuwa baza (ON DELETE CASCADE). */
+    // Wyniki i czujniki serii usuwa baza (ON DELETE CASCADE).
     #[Route('/{id}', name: 'api_series_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(#[MapEntity(message: 'Seria nie istnieje.')] Series $series): Response

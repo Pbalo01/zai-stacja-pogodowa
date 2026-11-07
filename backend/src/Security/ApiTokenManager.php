@@ -7,10 +7,6 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Wydawanie i unieważnianie tokenów Bearer. Klient dostaje losowy token,
- * a w bazie zostaje tylko jego skrót SHA-256 z datą wygaśnięcia.
- */
 final class ApiTokenManager
 {
     public const TTL_SECONDS = 3600;

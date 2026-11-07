@@ -16,11 +16,8 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
-/**
- * Zamienia każdy wyjątek zgłoszony w /api na odpowiedź Problem Details.
- * Priorytet niższy niż listener Security (1), który zamienia AccessDeniedException
- * na 401/403, ale wyższy niż domyślny ErrorListener Symfony (-128).
- */
+// Priorytet niższy niż listener Security (1), który zamienia AccessDeniedException
+// na 401/403, ale wyższy niż domyślny ErrorListener Symfony (-128).
 #[AsEventListener(event: KernelEvents::EXCEPTION, priority: -64)]
 final class ApiExceptionListener
 {

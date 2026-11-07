@@ -10,13 +10,8 @@ use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-/**
- * Uwierzytelnienie czujnika nagłówkiem X-API-Key. Szukamy skrótu SHA-256
- * klucza – sam klucz nie jest nigdzie zapisany. Token administratora
- * nie zastępuje klucza (brak nagłówka → 401).
- *
- * Użycie: #[ValueResolver('sensor_api_key')] Sensor $sensor
- */
+// Działa poza firewallem Bearer: token administratora nie zastępuje klucza czujnika.
+// Użycie: #[ValueResolver('sensor_api_key')] Sensor $sensor
 #[AsTargetedValueResolver('sensor_api_key')]
 final class SensorApiKeyValueResolver implements ValueResolverInterface
 {

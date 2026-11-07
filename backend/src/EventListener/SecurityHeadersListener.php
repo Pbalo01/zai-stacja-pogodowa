@@ -6,10 +6,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * Nagłówki bezpieczeństwa dodawane do każdej odpowiedzi Symfony.
- * API nie osadza żadnych zasobów, więc dostaje najostrzejsze CSP.
- */
+// API nie osadza żadnych zasobów, więc dostaje najostrzejsze CSP.
 #[AsEventListener(event: KernelEvents::RESPONSE)]
 final class SecurityHeadersListener
 {

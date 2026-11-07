@@ -20,10 +20,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/api/auth')]
 final class AuthController extends AbstractController
 {
-    /**
-     * Logowanie obsługuje json_login z firewalla (LoginSuccessHandler).
-     * Kontroler wykona się tylko, gdy żądanie nie zawiera danych JSON.
-     */
+    // Logowanie obsługuje json_login z firewalla (LoginSuccessHandler);
+    // kontroler wykona się tylko, gdy żądanie nie zawiera danych JSON.
     #[Route('/login', name: 'api_auth_login', methods: ['POST'])]
     public function login(): never
     {

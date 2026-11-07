@@ -4,6 +4,8 @@ FROM dunglas/frankenphp:1-php8.3 AS base
 
 RUN install-php-extensions pdo_pgsql intl opcache zip
 
+RUN setcap -r /usr/local/bin/frankenphp
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -31,6 +33,9 @@ RUN rm -f .env.local .env.*.local \
     && php bin/console cache:clear \
     && php bin/console cache:warmup \
     && chmod +x docker/entrypoint.sh
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s \
+    CMD curl -fsS "http://127.0.0.1:${PORT}/api/health" || exit 1
 
 ENTRYPOINT ["/app/docker/entrypoint.sh"]
 CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]

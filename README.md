@@ -11,10 +11,22 @@ Wymagane: Docker, Node.js 20+.
 
 ```bash
 cp .env.example .env        # ustaw ADMIN_PASSWORD i APP_SECRET
-docker compose up -d --build
 ```
 
-Aplikacja: http://localhost:8080. Przy starcie wykonują się migracje i tworzy się konto administratora z `.env`.
+Środowisko dev montuje katalog `backend/` do kontenera, więc zmiany w PHP i `templates/` widać bez przebudowy:
+
+```bash
+docker compose --env-file .env -f docker/dev/compose.yaml up -d --build
+```
+
+Środowisko prod ma kod w obrazie, tak jak na Render:
+
+```bash
+docker compose --env-file .env -f docker/prod/compose.yaml up -d --build
+```
+
+Aplikacja: http://localhost:8080, baza: localhost:5433. Oba środowiska używają tej samej bazy,
+więc uruchamia się jedno naraz. Przy starcie wykonują się migracje i tworzy się konto administratora z `.env`.
 
 ## Dane przykładowe
 

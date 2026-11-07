@@ -2,6 +2,10 @@
 set -e
 
 if [ "$1" = 'frankenphp' ]; then
+    if [ ! -f vendor/autoload_runtime.php ]; then
+        composer install --prefer-dist --no-progress --no-interaction
+    fi
+
     # Baza (np. Neon) może się jeszcze wybudzać – czekamy maksymalnie ok. 60 s
     tries=0
     until php bin/console dbal:run-sql -q "SELECT 1" > /dev/null 2>&1; do

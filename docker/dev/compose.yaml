@@ -1,0 +1,40 @@
+name: zai-stacja-pogodowa
+
+services:
+  php:
+    build:
+      context: ../../backend
+      target: dev
+    env_file: ../../.env
+    environment:
+      DATABASE_URL: "postgresql://app:${POSTGRES_PASSWORD:-app}@database:5432/app?serverVersion=16&charset=utf8"
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    volumes:
+      - ../../backend:/app
+      - vendor:/app/vendor
+      - var:/app/var
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-app}"
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "app", "-U", "app"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+  vendor:
+  var:

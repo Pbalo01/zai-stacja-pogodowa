@@ -1,5 +1,7 @@
 # Domowa stacja pogodowa – ZAI 26Z
 
+[![Testy](https://github.com/Pbalo01/zai-stacja-pogodowa/actions/workflows/tests.yml/badge.svg)](https://github.com/Pbalo01/zai-stacja-pogodowa/actions/workflows/tests.yml)
+
 Aplikacja zbiera pomiary z czujników (temperatura, wilgotność, PM2.5) i udostępnia je przez REST API
 zgodne z kontraktem `zai-api-26z.yaml`.
 

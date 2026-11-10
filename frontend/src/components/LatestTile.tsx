@@ -2,19 +2,21 @@ import type { Measurement, Series } from '../api/types'
 import { formatDateTime, formatValue } from './format'
 import { SeriesMarker } from './SeriesMarker'
 
-interface ReadingTileProps {
+interface LatestTileProps {
   series: Series
   latest: Measurement | null
 }
 
-export function ReadingTile({ series, latest }: ReadingTileProps) {
+export function LatestTile({ series, latest }: LatestTileProps) {
   const headingId = `tile-${series.id}`
 
   return (
     <article className="tile" aria-labelledby={headingId} style={{ borderTopColor: series.color }}>
       <h3 id={headingId} className="tile-name">
         <SeriesMarker color={series.color} icon={series.icon} />
-        {series.name}
+        <span className="tile-name-text" title={series.name}>
+          {series.name}
+        </span>
       </h3>
       {latest ? (
         <>

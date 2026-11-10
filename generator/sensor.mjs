@@ -18,7 +18,8 @@ Tryb pracy:
   --count N          liczba wyników (history: domyślnie 24; live: bez limitu)
   --interval SEK     odstęp między wynikami w sekundach (history: 3600, live: 60)
   --start ISO        (history) czas pierwszego wyniku, np. 2026-11-01T00:00:00Z;
-                     domyślnie tak, by ostatni wynik przypadł na „teraz”
+                     domyślnie ostatni wynik przypada na ostatnią pełną wielokrotność
+                     --interval (np. pełną godzinę), więc serie mają wspólne znaczniki czasu
 
 Sposób generowania wartości:
   --shape random     błądzenie losowe w przedziale [min, max] (domyślnie)
@@ -220,7 +221,8 @@ async function runHistory(o) {
   } else {
     const next = makeGenerator(o);
     const stepMs = o.interval * 1000;
-    const start = o.start ?? Date.now() - (o.count - 1) * stepMs;
+    const lastAligned = Math.floor(Date.now() / stepMs) * stepMs;
+    const start = o.start ?? lastAligned - (o.count - 1) * stepMs;
     points = Array.from({ length: o.count }, (_, i) => ({
       timestamp: new Date(start + i * stepMs).toISOString(), value: next(),
     }));
